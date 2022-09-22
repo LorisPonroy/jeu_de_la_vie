@@ -8,7 +8,7 @@ example_jeu1 = [[False,True],[True,True]]
 example_jeu2 = [[True,False],[True,False]]
 
 def test_load_file():
-    jeu = charger_fichier(example_petit.vie)
+    jeu = charger_fichier("example_petit.vie")
     jeu[0][0] = False
     jeu[0][1] = True
     jeu[1][0] = True
@@ -32,5 +32,14 @@ def test_transition():
     jeu2[1][1] = True
     jeu3 = transition(jeu2)
     jeu3 == jeu2
+    jeu2 = transition(example_jeu2)
+    jeu2[0][0] = False
+    jeu3[0][0] = False
+    jeu3[0][0] = False
+    jeu3[0][0] = False
 
+def test_plus_large():
+    jeu = [[True,False,False],[True, True, False]]
+    jeu2 = transition(jeu)
+    jeu2 == [[True,True,False],[True,True,False]]
     

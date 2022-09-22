@@ -2,7 +2,11 @@ from typing import List
 
 def charger_fichier(nom_fichier:str) -> List[List[bool]]:
     """Charge le fichier et renvoie le jeu correspondant"""
-    pass
+    fichier = open(nom_fichier)
+    s = fichier.readline()
+    while(s != ""):#EOF ??
+        print(s)
+        s = fichier.readline()
     #Vérifier que toutes les lignes font la bonne taille
 
 def compte_voisins(jeu : List[List[bool]], x, y) -> int:
@@ -21,12 +25,16 @@ def transition(jeu : List[List[bool]]) -> List[List[bool]]:
     for i in range(len(jeu)):
         jeu_apres.append([])
         for j in range(len(jeu[0])):
+            # Selon le nombre de voisins la cellule est:
             n = compte_voisins(jeu,i,j)
             if n == 2:
-                cell = jeu[i][j]
+                cell = jeu[i][j]    # maintenu dans son état précédent, ou bien,
             elif n == 3:
-                cell = True 
+                cell = True         # vivante, ou bien,
             else:
-                cell = False
+                cell = False        # en vie
             jeu_apres[i].append(cell)
     return jeu_apres
+
+if __name__=="__main__":
+    charger_fichier("example_petit.vie")
