@@ -3,11 +3,31 @@ from typing import List
 def charger_fichier(nom_fichier:str) -> List[List[bool]]:
     """Charge le fichier et renvoie le jeu correspondant"""
     fichier = open(nom_fichier)
-    s = fichier.readline()
-    while(s != ""):#EOF ??
-        print(s)
-        s = fichier.readline()
+    nb_lignes, nb_colonnes = fichier.readline().split(" ")
+    nb_lignes = int(nb_lignes)
+    nb_colonnes = int(nb_colonnes)
+    jeu = []
+    for i in range(nb_lignes):
+        line = fichier.readline()
+        jeu.append([False if c == "." else True for c in line[:nb_colonnes]])
+    return jeu
     #Vérifier que toutes les lignes font la bonne taille
+
+def string_from_jeu(jeu : List[List[bool]]) -> str:
+    s = ""
+    for i in range(len(jeu)):
+        for j in range(len(jeu[0])):
+            if jeu[i][j]:
+                s += "*"
+            else:
+                s += "."
+        s+= "\n"
+    return s
+
+def sauvegarder_fichier(nom_fichier:str, jeu: List[List[bool]]) -> None:
+    """Sauvegarde le jeu dans un fichier dans le dossier sauvegarde"""
+    fichier = open(nom_fichier, "w")
+    fichier.write(string_from_jeu(jeu))
 
 def compte_voisins(jeu : List[List[bool]], x, y) -> int:
     """Donne le nombre de voisins de la cellule x,y dans le jeu"""
@@ -37,4 +57,9 @@ def transition(jeu : List[List[bool]]) -> List[List[bool]]:
     return jeu_apres
 
 if __name__=="__main__":
-    charger_fichier("example_petit.vie")
+    jeu = charger_fichier("example_petit.vie")
+    print(string_from_jeu(jeu))
+    jeu = transition(jeu)
+    print(string_from_jeu(jeu))
+    sauvegarder_fichier("sauvegarde/example_petit2.vie", jeu)
+
